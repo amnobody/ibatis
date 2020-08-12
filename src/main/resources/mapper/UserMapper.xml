@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.ibatis.mapper.UserMapper">
+    <insert id="insert" parameterType="com.leo.ibatis.entity.User">
+        insert into cc_user(user_id) values
+        <foreach collection="list" item="user" separator=",">
+            (#{user.userId})
+        </foreach>
+    </insert>
+
+    <select id="selectList" resultType="com.leo.ibatis.entity.User">
+        select * from cc_user
+     </select>
+</mapper>
