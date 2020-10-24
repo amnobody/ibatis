@@ -1,20 +1,23 @@
 package com.leo.ibatis.service;
 
-import com.leo.ibatis.entity.User;
-import com.leo.ibatis.mapper.UserMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.leo.ibatis.util.common.RequestPage;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * DESC:
+ * DESC: 封装的抽象service
  *
  * @author JiWei.Chen
  * @date 2020/08/05
  */
-public interface BaseService {
+public interface BaseService<Req, Resp> {
 
+    default PageInfo<Resp> page(RequestPage<Req> requestPage) {
+        return PageHelper.startPage(requestPage.getPageNum(), requestPage.getPageSize())
+                .doSelectPageInfo(() -> list(requestPage.getParam()));
+    }
 
-
-    List<User> queryList();
+    List<Resp> list(Req baseRequest);
 }

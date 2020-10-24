@@ -1,6 +1,8 @@
 package com.leo.ibatis.mapper;
 
 import com.leo.ibatis.entity.User;
+import com.leo.ibatis.util.req.UserListReq;
+import com.leo.ibatis.util.resp.UserListResp;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    List<User> selectList();
+    List<UserListResp> selectList(UserListReq userListReq);
 
     void insert(List<User> list);
 
