@@ -22,8 +22,6 @@ public class Test {
 
     public static Role mock() {
         Role role = new Role();
-        role.setLevel(0);
-        role.setDisplay(false);
         role.setId("10010");
         role.setRoleName("administrator");
         role.setOrderBy("name desc;");
@@ -34,7 +32,6 @@ public class Test {
         user.setUsername("nicksong");
         user.setAge(0);
 
-        role.setUserList(Arrays.asList(user));
         return role;
     }
 

@@ -22,5 +22,7 @@ public interface UserMapper {
 
     void insert(List<User> list);
 
+    List<User> select();
+
     Cursor<User> selectAll(Map<String,Object> map);
 }
