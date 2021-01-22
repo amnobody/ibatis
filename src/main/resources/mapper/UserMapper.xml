@@ -3,6 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.leo.ibatis.mapper.UserMapper">
+    <resultMap id="slave" type="com.leo.ibatis.entity.User">
+        <id property="id" column="id"></id>
+        <result property="id" column="id"></result>
+        <result property="username" column="username"></result>
+        <collection property="roleNames" ofType="java.lang.String">
+            <constructor>
+                <arg column="role_name"/>
+            </constructor>
+        </collection >
+    </resultMap>
+
     <insert id="insert" parameterType="com.leo.ibatis.entity.User">
         insert into user(user_id,info) values
         <foreach collection="list" item="user" separator=",">
@@ -11,6 +22,10 @@
     </insert>
 
     <select id="selectList" parameterType="com.leo.ibatis.util.req.UserListReq" resultType="com.leo.ibatis.util.resp.UserListResp">
-        select * from user where age = #{age}
+        select * from t_user where age =#{age}
      </select>
+
+    <select id="select"  resultMap="slave">
+        select u.*,r.role_name from t_user u left join t_role r on u.id = r.user_id where u.id &lt;= 30
+    </select>
 </mapper>

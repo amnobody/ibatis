@@ -4,8 +4,10 @@ import com.leo.ibatis.entity.User;
 import com.leo.ibatis.util.req.UserListReq;
 import com.leo.ibatis.util.resp.UserListResp;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.cursor.Cursor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * DESC:
@@ -20,4 +22,7 @@ public interface UserMapper {
 
     void insert(List<User> list);
 
+    List<User> select();
+
+    Cursor<User> selectAll(Map<String,Object> map);
 }
