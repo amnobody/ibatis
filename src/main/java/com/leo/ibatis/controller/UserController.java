@@ -1,6 +1,7 @@
 package com.leo.ibatis.controller;
 
 import com.leo.ibatis.config.SpringContextUtil;
+import com.leo.ibatis.config.ThreadPoolExecutorMdcWrapper;
 import com.leo.ibatis.entity.User;
 import com.leo.ibatis.mapper.UserMapper;
 import com.leo.ibatis.service.IUserService;
@@ -10,11 +11,15 @@ import com.leo.ibatis.util.req.UserListReq;
 import com.leo.ibatis.web.GlobalExceptionResolve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * DESC:
@@ -32,6 +37,39 @@ public class UserController {
     IUserService userService;
     @Resource
     UserMapper userMapper;
+    @Resource
+    Map<String, IUserService> userServiceMap;
+    @Resource
+    ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    @Resource
+    ThreadPoolExecutorMdcWrapper mdcThreadPool;
+
+
+    @RequestMapping("testThread")
+    public R testThread() {
+        logger.info("请求进入controller");
+        System.out.println(MDC.get("traceId"));
+        mdcThreadPool.execute(() -> {
+            logger.info("请求进入controller 异步线程 开始");
+            userMapper.selectList(new UserListReq());
+            logger.info("请求进入controller 异步线程 结束");
+        });
+        return R.ok();
+    }
+
+    @RequestMapping("testmap")
+    public R testmpa() {
+        userServiceMap.forEach((k, v) -> {
+            v.print();
+        });
+        return R.ok();
+    }
+
+    @ExceptionHandler
+    public R exception(Exception e) {
+        logger.error("controller 内部ExceptionHandler");
+        return R.error();
+    }
 
     @RequestMapping("list")
     public R list() {

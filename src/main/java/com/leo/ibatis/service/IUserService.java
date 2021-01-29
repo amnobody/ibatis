@@ -10,4 +10,6 @@ import com.leo.ibatis.util.resp.UserListResp;
  * @date 2020/08/05
  */
 public interface IUserService extends BaseService<UserListReq, UserListResp> {
+
+    void print();
 }

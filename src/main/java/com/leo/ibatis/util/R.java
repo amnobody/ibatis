@@ -2,9 +2,12 @@ package com.leo.ibatis.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
+
+    final ReentrantLock lock = new ReentrantLock();
 
     public R() {
         put("code", 0);
@@ -19,6 +22,15 @@ public class R extends HashMap<String, Object> {
         return error(500, msg);
     }
 
+    public void add() {
+        this.lock.lock();
+        try {
+            System.out.println("");
+        } finally {
+            this.lock.unlock();
+        }
+    }
+    
     public static R error(int code, String msg) {
         R r = new R();
         r.put("code", code);

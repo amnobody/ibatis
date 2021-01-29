@@ -22,7 +22,7 @@
     </insert>
 
     <select id="selectList" parameterType="com.leo.ibatis.util.req.UserListReq" resultType="com.leo.ibatis.util.resp.UserListResp">
-        select * from t_user where age =#{age}
+        select * from t_user
      </select>
 
     <select id="select"  resultMap="slave">
