@@ -6,10 +6,22 @@
         </encoder>
     </appender>
 
+<!--    日志导出到logstash-->
+<!--    <appender name="logstash" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">-->
+<!--        <destination>127.0.0.1:9250</destination>-->
+<!--        &lt;!&ndash; encoder必须配置,有多种可选 &ndash;&gt;-->
+<!--        <encoder charset="UTF-8"-->
+<!--                 class="net.logstash.logback.encoder.LogstashEncoder" >-->
+<!--            &lt;!&ndash; "appname":"ye_test" 的作用是指定创建索引的名字时用，并且在生成的文档中会多了这个字段  &ndash;&gt;-->
+<!--            <customFields>{"appname":"ye_test"}</customFields>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
     <!--    如果没有指定level 会自动继承 addtivity 指定是否向上级传递 默认为true则交给root appender-ref：配合additivity=false指定appender-->
     <logger name="com.leo.ibatis.mapper" level="debug"></logger>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
+<!--        <appender-ref ref="logstash"/>-->
     </root>
 </configuration>

@@ -6,4 +6,9 @@
     <select id="selectList" parameterType="com.leo.ibatis.entity.Role" resultType="com.leo.ibatis.entity.Role">
         select * from t_role where role_name = #{roleName} order by ${orderBy}
      </select>
+
+    <delete id="deleteByParams" parameterType="java.util.HashMap">
+        delete t from t_role t
+        where t.user_id = #{userId} and t.level = #{level}
+    </delete>
 </mapper>

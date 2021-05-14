@@ -18,6 +18,8 @@ import java.util.Map;
 @Mapper
 public interface UserMapper {
 
+//    List<UserListResp> selectList(UserListReq userListReq);
+
     List<UserListResp> selectList(UserListReq userListReq);
 
     void insert(List<User> list);
@@ -25,4 +27,8 @@ public interface UserMapper {
     List<User> select();
 
     Cursor<User> selectAll(Map<String,Object> map);
+
+    void insertCondition(User user);
+
+    void updateCondition(User user);
 }

@@ -12,4 +12,6 @@ import com.leo.ibatis.util.resp.UserListResp;
 public interface IUserService extends BaseService<UserListReq, UserListResp> {
 
     void print();
+
+    void retry();
 }

@@ -6,7 +6,7 @@ package com.leo.ibatis.vx.rmi.bean;
  * @date 2020/12/31
  * @description
  */
-public interface UserInterface {
+interface UserInterface {
 
     void sayHello();
 }

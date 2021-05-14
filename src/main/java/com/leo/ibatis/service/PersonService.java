@@ -25,4 +25,9 @@ public class PersonService implements IUserService{
     public void print() {
         System.out.println("person");
     }
+
+    @Override
+    public void retry() {
+
+    }
 }

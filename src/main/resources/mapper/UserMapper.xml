@@ -22,10 +22,32 @@
     </insert>
 
     <select id="selectList" parameterType="com.leo.ibatis.util.req.UserListReq" resultType="com.leo.ibatis.util.resp.UserListResp">
-        select * from t_user
+        select * from t_user where id &lt; 100
      </select>
 
     <select id="select"  resultMap="slave">
         select u.*,r.role_name from t_user u left join t_role r on u.id = r.user_id where u.id &lt;= 30
     </select>
+
+    <insert id="insertCondition" parameterType="com.leo.ibatis.entity.User">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test = "username != null">username,</if>
+            <if test = "age != null">age</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test = "username != null">#{username},</if>
+            <if test = "age != null">#{age}</if>
+        </trim>
+    </insert>
+
+    <update id="updateCondition" parameterType="com.leo.ibatis.entity.User">
+        update t_user set username = #{username},age = #{age}
+
+<!--        <set>-->
+<!--            <if test = "username != null">username = #{username},</if>-->
+<!--            <if test = "age != null">username = #{age}</if>-->
+<!--        </set>-->
+        where id = #{id}
+    </update>
 </mapper>
