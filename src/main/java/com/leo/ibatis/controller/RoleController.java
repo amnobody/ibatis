@@ -41,6 +41,7 @@ public class RoleController {
 
         //c2
         //c3
+        //c4
         map.put(atomicInteger.incrementAndGet(), request.getSession().getId());
         System.out.println(list);
         return R.ok(list);
