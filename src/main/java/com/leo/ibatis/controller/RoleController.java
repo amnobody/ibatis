@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -45,10 +44,9 @@ public class RoleController {
     }
 
     @RequestMapping("start")
-    public R start() {
-        final CusTask cusTask = new CusTask();
-        final ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(cusTask);
+    public R start(HttpServletRequest request, HttpServletResponse response) {
+        roleService.a();
+        roleService.c();
         return R.ok();
     }
 

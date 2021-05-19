@@ -1,7 +1,11 @@
 package com.leo.ibatis.service;
 
+import com.leo.ibatis.config.AsyncConfiguration;
 import com.leo.ibatis.entity.Role;
 import com.leo.ibatis.mapper.RoleMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +23,11 @@ import java.util.concurrent.TimeUnit;
  * @description
  */
 @Service
+@Slf4j
 public class RoleService implements IRoleService {
 
+    @Resource
+    AsyncConfiguration asyncConfiguration;
     @Resource
     RoleMapper roleMapper;
 
@@ -29,19 +36,25 @@ public class RoleService implements IRoleService {
         return roleMapper.selectList(baseRequest);
     }
 
-    @Resource
-    RoleService roleService;
-
     @Transactional()
     public void a() {
-        System.out.println("a方式 事务传播级别never");
+        log.info("a方式 事务传播级别never");
         b();
-        System.out.println("a方法结束");
+        log.info("a方法结束");
     }
 
+    @Async(value = "threadPoolTaskExecutor")
     @Transactional(propagation = Propagation.NEVER)
     public void b() {
-        System.out.println("b方法默认传播级别");
+        log.info("b方法默认传播级别");
+    }
+
+    @Async(value = "threadPoolTaskExecutor")
+    public void c() {
+        final ThreadPoolTaskExecutor executor = (ThreadPoolTaskExecutor)asyncConfiguration.getAsyncExecutor();
+        log.info("c方法开始结束");
+        log.info("线程池活跃线程数量={},总任务数量={},已完成数量={}，现存任务队列大小={}",
+                executor.getActiveCount(),executor.getPoolSize(),executor.getThreadPoolExecutor().getCompletedTaskCount(),executor.getThreadPoolExecutor().getQueue().size());
     }
 
     @Transactional
