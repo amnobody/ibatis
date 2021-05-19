@@ -39,6 +39,7 @@ public class RoleController {
     @RequestMapping("build")
     public R build(@RequestBody List<String> list, HttpServletRequest request) {
 
+        //c2
         map.put(atomicInteger.incrementAndGet(), request.getSession().getId());
         System.out.println(list);
         return R.ok(list);
